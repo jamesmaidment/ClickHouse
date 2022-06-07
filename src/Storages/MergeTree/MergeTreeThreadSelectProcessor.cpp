@@ -105,6 +105,11 @@ void MergeTreeThreadSelectProcessor::finalizeNewTask()
     auto profile_callback = [this](ReadBufferFromFileBase::ProfileInfo info_) { pool->profileFeedback(info_); };
     const auto & metadata_snapshot = storage_snapshot->metadata;
 
+std::cerr << "==============TASK:==============\n" << task->task_columns.dump() << "\n";
+std::cerr << "pre_reader_for_step.size() " << pre_reader_for_step.size() << "\n\n";
+
+pre_reader_for_step.clear(); // is it being reused???
+
     if (!reader)
     {
         if (use_uncompressed_cache)
